@@ -142,7 +142,7 @@ class User(htb.HTBObject):
         self.name = data["name"]
         self.user_owns = data["user_owns"]
         self.points = data["points"]
-        self.avatar = data["avatar"]
+        self.avatar = data.get('avatar')
 
         if summary:
             self._is_summary = True
@@ -152,30 +152,29 @@ class User(htb.HTBObject):
             self.root_bloods = data.get("root_bloods_count") or 0
             self.rank_name = data.get("rank_text") or ""
         else:
-            self.ranking = data["ranking"]
-            self.root_owns = data["system_owns"]
-            self.user_bloods = data["user_bloods"]
-            self.root_bloods = data["system_bloods"]
-            self.rank_name = data["rank"]
-
-            self.respects = data["respects"]
-            self.university = data["university"]
-            self.university_name = data["university_name"]
-            self.description = data["description"]
-            self.github = data["github"]
-            self.linkedin = data["linkedin"]
-            self.twitter = data["twitter"]
-            self.website = data["website"]
+            self.ranking = data.get("ranking")
+            self.root_owns = data.get("system_owns", 0)
+            self.user_bloods = data.get("user_bloods", 0)
+            self.root_bloods = data.get("system_bloods", 0)
+            self.rank_name = data.get("rank", "")
+            self.respects = data.get("respects", 0)
+            self.university = data.get("university")
+            self.university_name = data.get("university_name", "")
+            self.description = data.get("description")
+            self.github = data.get("github", "")
+            self.linkedin = data.get("linkedin", "")
+            self.twitter = data.get("twitter", "")
+            self.website = data.get("website", "")
             self.respected = data.get("isRespected", False)
             self.followed = data.get("isFollowed", False)
-            self.rank_progress = data["current_rank_progress"]
-            self.next_rank = data["next_rank"]
-            self.next_rank_points = data["next_rank_points"]
-            self.rank_ownership = float(data["rank_ownership"])
-            self.rank_requirement = data["rank_requirement"]
-            self.country_name = data["country_name"]
-            self.team = data["team"]
-            self.public = bool(data["public"])
+            self.rank_progress = data.get("current_rank_progress", 0)
+            self.next_rank = data.get("next_rank", "")
+            self.next_rank_points = data.get("next_rank_points", 0)
+            self.rank_ownership = float(data.get("rank_ownership", 0))
+            self.rank_requirement = data.get("rank_requirement", 0)
+            self.country_name = data.get("country_name", "")
+            self.team = data.get("team")
+            self.public = bool(data.get("public", False))
 
     # noinspection PyUnresolvedReferences
     def get_content(self):
